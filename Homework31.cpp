@@ -2,6 +2,48 @@
 //
 
 #include <iostream>
+using namespace std;
+
+//Класс массив чисел
+class Array {
+private:
+    int* data; //указатель на динамический массив
+    size_t size; //размер массива
+    size_t volume; //объем массива
+
+    //Метод увеличения объема массива
+    void resize() {
+        volume *= 2; //увеличиваем объем в 2 раза
+        int* newData = new int[volume];
+
+        for (size_t i = 0; i < size; ++i) {
+            newData[i] = data[i]; //копируем данные в новый массив
+        }
+        delete[] data;
+        data = newData;
+    }
+public:
+    //Конструктор по умолчанию
+    Array() : size(0), volume(2) {
+        data = new int[volume];
+    }
+
+    //Инициализирующий конструктор
+    Array(const int* init_data, size_t init_size) : size(init_size), volume(init_size) {
+        data = new int[volume];
+        for (size_t i = 0; i < size; ++i) {
+            data[i] = init_data[i];
+        }
+    }
+
+    //Конструктор копирования
+    Array(const Array& rest) : size(rest.size), volume(rest.volume) {
+        data = new int[volume];
+        for (size_t i = 0; i < size; ++i) {
+            data[i] = rest.data[i]
+        }
+    }
+};
 
 int main()
 {

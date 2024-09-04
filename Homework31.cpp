@@ -40,8 +40,13 @@ public:
     Array(const Array& rest) : size(rest.size), volume(rest.volume) {
         data = new int[volume];
         for (size_t i = 0; i < size; ++i) {
-            data[i] = rest.data[i]
+            data[i] = rest.data[i];
         }
+    }
+
+    //Деструктор
+    ~Array() {
+        delete[] data;
     }
 };
 

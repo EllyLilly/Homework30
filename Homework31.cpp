@@ -121,6 +121,45 @@ public:
             size--;
         }
     }
+
+    //Метод сравнения двух массивов
+    bool isEqual(const Array& other) {
+        if (size != other.size) return false;
+        for (size_t i = 0; i < size; ++i) {
+            if (data[i] != other.data[i]) return false;
+        }
+        return true;
+    }
+
+    //Метод сортировки (пузырек)
+    void sort() {
+        for (size_t i = 0; i < size - 1; ++i) {
+            for (size_t j = 0; j < size; ++j) {
+                if (data[j] > data[j + 1]) {
+                    int temp = data[j];
+                    data[j] = data[j + 1];
+                    data[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    //Метод поиска элемента
+    int search(int value) {
+        for (size_t i = 0; i < size; ++i) {
+            if (data[i] == value) {
+                return i;
+            }
+        }
+        return -1; //если индекс не найден, возвращаем -1
+    }
+
+    //Метод переворота массива
+    void reverse() {
+        for (size_t i = 0; i < size / 2; ++i) {
+            swap(data[i], data[size - i - 1]);
+        }
+    }
 };
 
 int main()

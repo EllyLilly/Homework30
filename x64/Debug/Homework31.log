@@ -1,0 +1,4 @@
+﻿  Homework31.cpp
+D:\Proyectos VS\Homework31\Homework31\Homework31.cpp(72,24): warning C4267: 'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+D:\Proyectos VS\Homework31\Homework31\Homework31.cpp(134,24): warning C4267: 'return': conversión de 'size_t' a 'int'; posible pérdida de datos
+  Homework31.vcxproj -> D:\Proyectos VS\Homework31\x64\Debug\Homework31.exe

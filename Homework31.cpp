@@ -25,13 +25,15 @@ private:
 public:
     //Конструктор по умолчанию
     Array() {
+        size = 0;
+        volume = 10;
         data = new int[volume];
     }
 
     //Инициализирующий конструктор
     Array(const int* init_data, size_t init_size) {
         this->size = init_size;
-        this->volume = init_size;
+        this->volume = init_size * 2;
         data = new int[volume];
         for (size_t i = 0; i < size; ++i) {
             data[i] = init_data[i];
@@ -57,16 +59,7 @@ public:
     void add_end(int value) {
         //проверка, нужно ли увеличивать объем массива
         if (size >= volume) {
-            int new_volume = volume * 2;
-            int* new_data = new int[new_volume];
-
-            for (int i = 0; i < size; i++) {
-                new_data[i] = data[i];
-            }
-            delete[] data;
-
-            data = new_data;
-            volume = new_volume;
+            resize();
         }
         data[size++] = value;
     }
@@ -74,26 +67,14 @@ public:
     //Метод добавления элементов в начало
     void add_init(int value) {
         if (size >= volume) {
-            int new_volume = volume * 2; //увеличиваем объем массива в два раза
-            int* new_data = new int[new_volume];
-
-            for (int i = 0; i < size; i++) {
-                new_data[i + 1] = data[i]; //сдвиг элементов вправо
-            }
-            delete[] data;
-            data = new_data;
-            volume = new_volume;
+            resize();
         }
-        else {
-            //если объем массива не надо изменять, сдвигаем элементы вправо
-            for (int i = size; i > 0; --i) {
-                data[i] = data[i - 1];
+            for (int i = size; i << size > 0; --i) {
+                data[i] = data[i - 1]; //сдвиг элементов вправо
             }
-        }
-        //добавляем элемент в начало
-        data[0] = value;
-        ++size;
-    }
+            data[0] = value;
+            ++size;
+     }
 
     //Метод удаления элемента с конца
     void remove_end() {
@@ -112,20 +93,104 @@ public:
         }
     }
 
-    //Метод удаления элемента по индексу
+    //Метод удаления элемента из произвольного места
     void remove_ind(int index) {
-        if (index >= 0 && index < size) {
+        if (index >= size) {
+            cout << "Index is out of range.\n";
+            return;
+        }
             for (size_t i = index; i < size - 1; ++i) {
                 data[i] = data[i + 1];
             }
             size--;
         }
+
+    //Метод сравнения двух массивов
+    bool isEqual(const Array& other) {
+        if (size != other.size) return false;
+        for (size_t i = 0; i < size; ++i) {
+            if (data[i] != other.data[i]) return false;
+        }
+        return true;
     }
+
+    //Метод сортировки пузырьком
+    void sort() {
+        for (size_t i = 0; i < size - 1; ++i) {
+            for (size_t j = 0; j < size - i - 1; ++j) {
+                if (data[j] > data[j + 1]) {
+                    int temp = data[j];
+                    data[j] = data[j + 1];
+                    data[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    //Метод поиска элемента
+    int search(int value) {
+        for (size_t i = 0; i < size; ++i) {
+            if (data[i] == value) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    //Метод переворота массива
+    void reverse() {
+        for (size_t i = 0; i < size / 2; ++i) {
+            swap(data[i], data[size - i - 1]);
+        }
+    }
+
+    //Метод вывода
+    void print() {
+        for (size_t i = 0; i < size; ++i) {
+            cout << data[i] << " ";
+        }
+        cout << endl;
+    }
+
+    //Метод получения текущего размера массива
+    size_t get_size() {
+        return size;
+    }
+
+    
+
 };
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    Array arr;
+
+    arr.add_end(10);
+    arr.add_end(20);
+    arr.add_end(30);
+    arr.print();
+
+    arr.add_init(5);
+    arr.print();
+
+    arr.remove_end();
+    arr.print();
+    arr.remove_init();
+    arr.print();
+
+    arr.remove_ind(0);
+    arr.print();
+
+    arr.add_end(15);
+    arr.add_end(25);
+    arr.sort();
+    arr.print();
+
+    arr.reverse();
+    arr.print();
+
+    int index = arr.search(20);
+    cout << "Index of 20: " << index << endl;
 }
 
 // Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar

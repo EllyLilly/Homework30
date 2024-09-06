@@ -24,12 +24,14 @@ private:
     }
 public:
     //Конструктор по умолчанию
-    Array() : size(0), volume(2) {
+    Array() {
         data = new int[volume];
     }
 
     //Инициализирующий конструктор
-    Array(const int* init_data, size_t init_size) : size(init_size), volume(init_size) {
+    Array(const int* init_data, size_t init_size) {
+        this->size = init_size;
+        this->volume = init_size;
         data = new int[volume];
         for (size_t i = 0; i < size; ++i) {
             data[i] = init_data[i];
@@ -37,10 +39,12 @@ public:
     }
 
     //Конструктор копирования
-    Array(const Array& rest) : size(rest.size), volume(rest.volume) {
+    Array(const Array& copy) {
+        this->size = copy.size;
+        this->volume = copy.volume;
         data = new int[volume];
         for (size_t i = 0; i < size; ++i) {
-            data[i] = rest.data[i];
+            data[i] = copy.data[i];
         }
     }
 

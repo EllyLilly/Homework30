@@ -52,6 +52,75 @@ public:
     ~Array() {
         delete[] data;
     }
+
+    //Метод добавления элемента в конец
+    void add_end(int value) {
+        //проверка, нужно ли увеличивать объем массива
+        if (size >= volume) {
+            int new_volume = volume * 2;
+            int* new_data = new int[new_volume];
+
+            for (int i = 0; i < size; i++) {
+                new_data[i] = data[i];
+            }
+            delete[] data;
+
+            data = new_data;
+            volume = new_volume;
+        }
+        data[size++] = value;
+    }
+
+    //Метод добавления элементов в начало
+    void add_init(int value) {
+        if (size >= volume) {
+            int new_volume = volume * 2; //увеличиваем объем массива в два раза
+            int* new_data = new int[new_volume];
+
+            for (int i = 0; i < size; i++) {
+                new_data[i + 1] = data[i]; //сдвиг элементов вправо
+            }
+            delete[] data;
+            data = new_data;
+            volume = new_volume;
+        }
+        else {
+            //если объем массива не надо изменять, сдвигаем элементы вправо
+            for (int i = size; i > 0; --i) {
+                data[i] = data[i - 1];
+            }
+        }
+        //добавляем элемент в начало
+        data[0] = value;
+        ++size;
+    }
+
+    //Метод удаления элемента с конца
+    void remove_end() {
+        if (size > 0) {
+            size--;
+        }
+    }
+
+    //Метод удаления элемента с начала
+    void remove_init() {
+        if (size > 0) {
+            for (size_t i = 0; i < size - 1; ++i) {
+                data[i] = data[i + 1];
+            }
+            size--; //уменьшаем размер массива
+        }
+    }
+
+    //Метод удаления элемента по индексу
+    void remove_ind(int index) {
+        if (index >= 0 && index < size) {
+            for (size_t i = index; i < size - 1; ++i) {
+                data[i] = data[i + 1];
+            }
+            size--;
+        }
+    }
 };
 
 int main()
